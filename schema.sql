@@ -1,23 +1,21 @@
-CREATE TABLES sales (
-    id INTERGER PRIMARY KEY,
-    user-id INTERGER NOT NULL,
-    payment_method TEXT NOT NULL,
-    total INTERGER NOT NULL,
-    created_at TEXT NOT NULL,
+CREATE TABLE sales (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  customer_id INTEGER,
+  payment_method TEXT NOT NULL,
+  total INTEGER NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
 
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (customer_id) REFERENCES customer(id)
-    );
-
-CREATE TABLE sale_item (
-    id INTERGER PRIMARY KEY,
-    sale_id INTERGER NOT NULL,
-    product_id INTERGER NOT NULL,
-    quantity INTERGER NOT NULL CHECK (quantity > 0),
-    unit_price INTERGER NOT NULL,
-    unit_cost INTERGER NOT NULL,
-
-    FOREIGN KEY (sale_id) REFERENCES sales(id),
-    FOREIGN KEY (product_id) REFERENCES products(id),
-
+CREATE TABLE sale_items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  sale_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  quantity INTEGER NOT NULL CHECK (quantity > 0),
+  unit_price INTEGER NOT NULL,
+  unit_cost INTEGER NOT NULL,
+  FOREIGN KEY (sale_id) REFERENCES sales(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
 );
